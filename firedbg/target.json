@@ -1,0 +1,11 @@
+{
+  "binaries": [
+    {
+      "name": "cobalt-strikeout",
+      "src_path": "/home/aldorithms/cobalt-strikeout/src/main.rs"
+    }
+  ],
+  "examples": [],
+  "integration_tests": [],
+  "unit_tests": []
+}
