@@ -1,5 +1,5 @@
 use cobalt_strikeout::system::system_update;
-use cobalt_strikeout::hardening::{coredumps::disable_core_dumps, ipv6::disable_ipv6_socket};
+use cobalt_strikeout::hardening::disable::{core_dumps::disable_core_dumps, ipv6::disable_ipv6_socket};
 use color_eyre::Result;
 
 fn main() -> Result<()> {

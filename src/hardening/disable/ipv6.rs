@@ -1,4 +1,4 @@
-use std::io::Write;
+use std::{io::Write, fs::OpenOptions};
 use color_eyre::Result;
 
 
@@ -47,7 +47,7 @@ pub fn disable_ipv6_socket() -> Result<()> {
 
 pub fn disable_ipv6_conf() -> Result<()> {
     // Opening /proc/sys/net/ipv6/conf/all/disable_ipv6
-    std::fs::OpenOptions::new()
+    OpenOptions::new()
         .write(true) // Open file in write mode
         .open("/proc/sys/net/ipv6/conf/all/disable_ipv6")? // If unable to open file, print error message
         .write_all(b"1")?; // Write 1 to /proc/sys/net/ipv6/conf/all/disable_ipv6

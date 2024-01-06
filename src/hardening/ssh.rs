@@ -39,5 +39,6 @@ pub fn harden_sshd() -> Result<()> {
         libc::chown(path.as_ptr(), 0, 0);
         libc::chmod(path.as_ptr(),libc::S_IRUSR | libc::S_IWUSR);
     };
+    
     Ok(())
 }

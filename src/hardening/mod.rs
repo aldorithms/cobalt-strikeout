@@ -1,12 +1,5 @@
-pub mod freevxfs;
-pub mod ipv6;
-pub mod aslr;
-pub mod coredumps;
-pub mod setuid_binaries;
-pub mod ptrace;
-pub mod lkm;
-pub mod usb_storage;
-pub mod ssh;
+pub mod disable;
+pub mod enable;
 
 /*
 void disable_core_dumps();                      done
@@ -16,15 +9,15 @@ void disable_ptrace();                      done
 void disable_loading_kernel_modules();   done
 void disable_loading_USB_Storage();         done
 void disable_freevxfs_mounting();       done
-void disable_jffs_mounting();
-void disable_hfs_mounting();
-void disable_hfsplus_mounting();
-void disable_udf_mounting();
-void disable_auto_mounting();
-void disable_packet_redirect_sending();
-void disable_ip_forwarding();
-void disable_source_routing();
-void disable_icmp_redirects();
+void disable_jffs_mounting();           done
+void disable_hfs_mounting();            done
+void disable_hfsplus_mounting();        done
+void disable_udf_mounting();            done
+void disable_auto_mounting();               done
+void disable_packet_redirect_sending();     done
+void disable_ip_forwarding();               done
+void disable_source_routing();          done      
+void disable_icmp_redirects();              done
 void disable_regular_user_shells();
 
 void harden_sshd();                     done

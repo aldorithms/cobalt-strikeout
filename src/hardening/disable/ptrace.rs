@@ -5,5 +5,6 @@ pub fn disable_ptrace() -> Result<()> {
     // Disable ptrace
     set_dumpable(false)
         .expect("Unable to disable ptrace");
+    
     Ok(())
 }
