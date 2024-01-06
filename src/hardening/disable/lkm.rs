@@ -1,7 +1,7 @@
 use std::io::Write;
 use color_eyre::Result;
 
-pub fn disable_kernel_modules() -> Result<()> {
+pub fn disable_loading_kernel_modules() -> Result<()> {
     // Disable loading of kernel modules
     std::fs::OpenOptions::new()
         .write(true) // Open file in write mode
