@@ -1,3 +1,5 @@
+mod system;
+
 use cobalt_strikeout::hardening::disable::lkm::disable_loading_kernel_modules;
 use cobalt_strikeout::hardening::disable::mounting::auto::disable_auto_mounting;
 use cobalt_strikeout::hardening::disable::packet_redirect::disable_packet_redirect_sending;
@@ -17,6 +19,8 @@ fn main() -> Result<()> {
         Ok(_) => println!("Core dumps disabled successfully"),
         Err(e) => eprintln!("Error disabling core dumps: {}", e),
     };
+
+    // Disable IPv6
     match disable_ipv6_socket() {
         Ok(_) => println!("IPv6 socket disabled successfully"),
         Err(e) => eprintln!("Error disabling IPv6 socket: {}", e),

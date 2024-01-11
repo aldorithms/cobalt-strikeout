@@ -9,3 +9,4 @@ pub mod packet_redirect;
 pub mod ip_forwarding;
 pub mod source_routing;
 pub mod icmp_redirects;
+pub mod regular_user_shells;

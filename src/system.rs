@@ -1,4 +1,6 @@
 use std::process::Command;
+use which::which;
+use color_eyre::Result;
 
 enum PackageManager {
     None,
@@ -11,16 +13,12 @@ enum PackageManager {
     SlackPkg,
 }
 
-fn is_package_manager_installed(pkg_mngr: &str) -> bool {
-    which::which(pkg_mngr).is_ok()
-}
-
 fn get_package_manager() -> PackageManager {
     let mut package_manager = PackageManager::None;
     let pkg_mngrs = [ "apt-get", "dnf", "yum", "apk", "pacman", "slapt-get", "slackpkg",];
 
     for &pkg_mngr in pkg_mngrs.iter() {
-        if is_package_manager_installed(pkg_mngr) {
+        if which(pkg_mngr).is_ok() {
             package_manager = match pkg_mngr {
                 "apt-get" => PackageManager::AptGet, // For Debian
                 "dnf" => PackageManager::Dnf, // For Fedora
@@ -37,7 +35,7 @@ fn get_package_manager() -> PackageManager {
     package_manager
 }
 
-pub fn system_update() -> Result<(), std::io::Error> {
+pub fn system_update() -> Result<()> {
     println!("Updating system...");
     match get_package_manager() {
         PackageManager::AptGet => {
