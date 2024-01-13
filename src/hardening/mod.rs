@@ -2,7 +2,7 @@ pub mod disable;
 pub mod enable;
 pub mod ensure;
 pub mod ssh;
-//pub mod restart_service;
+pub mod restart_service;
 
 /*
 void disable_core_dumps();                      done

@@ -1,5 +1,6 @@
-use std::{io::Write, fs::OpenOptions};
+use std::{io::Write, fs::OpenOptions, mem::size_of};
 use color_eyre::Result;
+use libc::{IPPROTO_IPV6, IPV6_V6ONLY, c_void, c_int};
 
 
 /// Disable IPv6 - Note: needs to be replaced with a non-libc implementation later.
@@ -25,15 +26,7 @@ pub fn disable_ipv6_socket() -> Result<()> {
     }
 
     // Setting socket options
-    if unsafe { 
-        libc::setsockopt(
-            ipv6_socket, 
-            libc::IPPROTO_IPV6, 
-            libc::IPV6_V6ONLY, 
-            &mut ipv6_disabled as *mut _ as *mut libc::c_void, 
-            std::mem::size_of::<libc::c_int>() as u32
-        )
-    } < 0 {
+    if unsafe { libc::setsockopt(ipv6_socket, IPPROTO_IPV6,  IPV6_V6ONLY, &mut ipv6_disabled as *mut _ as *mut c_void,  size_of::<c_int>() as u32) } < 0 {
         eprintln!("Unable to set socket options");
     }
 

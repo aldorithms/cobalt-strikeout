@@ -10,13 +10,10 @@ fn restart_service(service_name: &str) -> Result<()> {
     let pid = find_pid_by_name(service_name)?;
     println!("{} PID is {}", service_name, pid);
 
-    let mut command = Command::new("kill");
-    command.arg("-HUP").arg(pid.to_string());
+    let mut command = Command::new("kill").arg("-HUP").arg(pid.to_string());
 
     if let Err(err) = command.exec() {
-        return Err(
-            format!("Failed to send SIGHUP to process: {}", err).into()
-        );
+        return Err(format!("Failed to send SIGHUP to process: {}", err).into());
     }
 
     Ok(())

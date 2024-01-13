@@ -1,29 +1,33 @@
-use std::os::unix::process::CommandExt;
+use std::ffi::CStr;
 use std::process::Command;
+use libc::{getpwuid, uid_t};
+use color_eyre::Result;
 
-fn disable_regular_user_shells() {
-   const RESTRICTED_SHELL: &str = "/bin/rbash";
-   const START_UID: u32 = 1000;
-   const END_UID: u32 = 65535;
+pub fn disable_regular_user_shells() -> Result<()> {
+    const RESTRICTED_SHELL: &str = "/bin/rbash";
+    const START_UID: uid_t = 1000;
+    const END_UID: uid_t = 65535;
 
-   for uid in START_UID..=END_UID {
-       match nix::unistd::getpwuid(uid) {
-           Ok(Some(pw)) => {
-               if pw.pw_name != "root" {
-                   let output = Command::new("chsh")
-                       .arg("-s")
-                       .arg(RESTRICTED_SHELL)
-                       .arg(pw.pw_name)
-                       .output()
-                       .expect("Failed to execute chsh command");
+    for uid in START_UID..=END_UID {
+        let pw = unsafe{ getpwuid(uid) };
 
-                   if !output.status.success() {
-                       eprintln!("Failed to change shell for user {}: {}", pw.pw_name, String::from_utf8_lossy(&output.stderr));
-                   }
-               }
-           }
-           Ok(None) => {} // User not found, skip
-           Err(e) => eprintln!("Error getting user information for UID {}: {}", uid, e),
-       }
-   }
+        if pw.is_null() {
+            continue; // User not found, skip to next user
+        }
+
+        let pw_name = unsafe { CStr::from_ptr((*pw).pw_name) }.to_str().unwrap();
+        if pw_name != "root" {
+            let output = Command::new("chsh")
+                .arg("-s")
+                .arg(RESTRICTED_SHELL)
+                .arg(pw_name)
+                .output()
+                .expect("Failed to execute chsh command");
+
+                if !output.status.success() {
+                    eprintln!("Failed to change shell for user {}: {}", pw_name, String::from_utf8_lossy(&output.stderr));
+                }
+        }
+    }
+    Ok(())
 }
