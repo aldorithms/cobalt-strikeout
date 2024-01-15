@@ -1,4 +1,4 @@
-use std::fs;
+use std::fs::{self, File};
 use std::io::prelude::*;
 use std::os::unix::fs::PermissionsExt;
 use std::path::Path;
@@ -17,7 +17,7 @@ pub fn ensure_tmp_is_configured() -> Result<(), std::io::Error> {
     // Create tmpfiles.d configuration file if it doesn't exist
     let conf_path = Path::new("/etc/tmpfiles.d/tmp.conf");
     if !conf_path.exists() {
-        let mut conf = fs::File::create(conf_path)?;
+        let mut conf = File::create(conf_path)?;
         conf.write_all(b"D /tmp 1777 root root 10d\n")?;
     }
 

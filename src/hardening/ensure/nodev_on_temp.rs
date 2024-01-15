@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::{BufRead, BufReader, ErrorKind, Read};
+use std::io::{BufRead, BufReader, ErrorKind};
 
 pub fn ensure_nodev_on_temp() -> Result<(), std::io::Error> {
     // Open mountinfo file
@@ -19,8 +19,5 @@ pub fn ensure_nodev_on_temp() -> Result<(), std::io::Error> {
         }
     }
 
-    Err(std::io::Error::new(
-        ErrorKind::NotFound,
-        "nodev option is not set for /tmp",
-    ))
+    Err(std::io::Error::new(ErrorKind::NotFound,"nodev option is not set for /tmp",))
 }

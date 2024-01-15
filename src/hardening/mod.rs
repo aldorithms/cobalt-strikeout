@@ -21,21 +21,21 @@ void disable_packet_redirect_sending();     done
 void disable_ip_forwarding();               done
 void disable_source_routing();          done      
 void disable_icmp_redirects();              done
-void disable_regular_user_shells();
+void disable_regular_user_shells();             done    
 
 void harden_sshd();                     done
 void secure_grub();
 
 
 void enable_aslr();                     done
-void ensure_tmp_is_configured();
-void ensure_nodev_on_temp();
-void ensure_nosuid_on_tmp();
+void ensure_tmp_is_configured();    done
+void ensure_nodev_on_temp();        done
+void ensure_nosuid_on_tmp();    done
 void ensure_shm();
 void ensure_nosuid_on_shm();
 void ensure_sticky_bit();
-void enable_tcp_syn_cookies();
-void ensure_sudo_uses_pty();
+void enable_tcp_syn_cookies();      done
+void ensure_sudo_uses_pty();        done
 void ensure_sudo_log_file_exists();
 
 void secure_samba();
